@@ -1,0 +1,14 @@
+{
+  "name": "bitsy",
+  "version": "0.0.0",
+  "description": "Bitset using buffers",
+  "main": "./lib/createBitsy.js",
+  "scripts": {
+    "test": "node ./node_modules/jasmine-node/bin/jasmine-node ./spec/"
+  },
+  "author": "Ozan Turgut <ozanturgut@gmail.com>",
+  "license": "APACHE 2",
+  "devDependencies": {
+    "jasmine-node": "^1.14.3"
+  }
+}
