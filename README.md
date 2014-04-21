@@ -9,30 +9,54 @@ First `npm install bitsy`
 ```javascript
 var createBitsy = require('bitsy');
 
+// bitsyInstance = createBitsy([size]) (or new createBitsy.Bitsy([size]))
 // Create a 10 MB bitset.
 var MEGABYTE_IN_BITS = 1048576 * 8;
 var bitsy = createBitsy(10 * MEGABYTE_IN_BITS);
 
 
-// Set the 200th bit to true
-bitsy.set(200, true);
+// Bitsy.prototype.setSize(newSize)
+bitsy.setSize(0); // Truncate bitset and release memory
+bitsy.setSize(bitsy.length * 2); // double the bitset size
 
 
-// Set the 200th bit to false
+// Bitsy.prototype.set(index, bitValue)
 bitsy.set(200, false);
 
 
-// Copy part of a bitsy to another bitsy
+// trueOrFalse = Bitsy.prototype.get(index)
+var bitValue = bitsy.get(200);
+
+
+// Bitsy.prototype.copyTo(target, [targetFirstBitIndex], [sourceFirstBitIndex], [sourceLastBitIndex])
 var a = createBitsy(1000);
 a.set(100, true);
+var b = createBitsy(50);
+a.copyTo(b, 0, 80, 120); // Copy the bit range 80-120 form a to b
+b.get(20) === b.get(100);
 
+
+// Bitsy.prototype.copyFrom(source, [sourceFirstBitIndex], [sourceLastBitIndex], [targetFirstBitIndex])
 var b = createBitsy(50);
 // Copy the bit range 80-120 form a to b
-a.copyTo(b, 80, 120);
+b.copyFrom(a, 80, 120, 0);
+b.get(20) === a.get(100);
 
-// Since we set the 100th bit of a to true, then
-// we copied a from index 80 to 120 to b (index 0 to 50),
-// that bit should not be in index 20 in b, so the below
-// statement will return true
-b.get(20);
+
+
+// Bitsy.prototype.slice(begin, end)
+// Slicing works just like JavaScript Array.prototype.slice
+// except it returns a new Bitsy instance.
+
+// create copy of b called 'a'
+var a = b.slice();
+
+// take the 10th bit through the last bit of b and  use them to create 'a'
+var a = b.slice(10);
+
+// take the 10th bit through the 13th bit of b and use them to create 'a'
+var a = b.slice(10, 14); // Note that the ending index is excluded
+
+// take the last 5 bits of b and use them to create 'a'
+var a = b.slice(-5);
 ```

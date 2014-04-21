@@ -1,4 +1,5 @@
-var createBitsy = require('../lib/createBitsy');
+var createBitsy = require('../lib/createBitsy'),
+	Bitsy = createBitsy.Bitsy;
 
 describe('bit getter', function(){
 	it('has no side effects', function(){
@@ -42,6 +43,51 @@ describe('constructor', function(){
 		expect(bitsy.get(1 * MEGABYTE_IN_BITS)).toBe(false);
 		bitsy.set(1 * MEGABYTE_IN_BITS, true);
 		expect(bitsy.get(1 * MEGABYTE_IN_BITS)).toBe(true);
+	});
+});
+
+describe('slice', function(){
+	it('returns new Bitsy with bits from source bitsy', function(){
+		var a = createBitsy(1000);
+		a.set(10, true);
+		var b = a.slice(9,11);
+
+		expect(b instanceof Bitsy).toBe(true);
+		expect(b.get(1)).toBe(true);
+		expect(b.length).toBe(2);
+	});
+
+	it('returns copy when no arguments provided', function(){
+		var a = createBitsy(1000);
+		a.set(10, true);
+		var b = a.slice();
+
+		expect(b instanceof Bitsy).toBe(true);
+		expect(b === a).toBe(false);
+		expect(b.length).toBe(a.length);
+		expect(b.get(10)).toBe(a.get(10));
+	});
+
+	it('treats negative start index as "last n elements"', function(){
+		var a = createBitsy(15);
+		a.set(12, true);
+		var b = a.slice(-4); // equal to .slice(10, a.length)
+
+		expect(b instanceof Bitsy).toBe(true);
+		expect(b === a).toBe(false);
+		expect(b.length).toBe(4); // index 14 - index 10
+		expect(b.get(1)).toBe(a.get(12));
+	});
+
+	it('treats negative start index as an offset from end', function(){
+		var a = createBitsy(15);
+		a.set(10, true);
+		var b = a.slice(1, -1); // equal to .slice(1, 14)
+
+		expect(b instanceof Bitsy).toBe(true);
+		expect(b === a).toBe(false);
+		expect(b.length).toBe(13); // index 14 - index 1
+		expect(b.get(9)).toBe(a.get(10));
 	});
 });
 
