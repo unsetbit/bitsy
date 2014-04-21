@@ -1,13 +1,31 @@
 {
   "name": "bitsy",
   "version": "0.0.1",
-  "description": "Bitset which uses real bits",
+  "description": "Fast and efficient bitset backed by a byte buffer",
   "main": "./lib/createBitsy.js",
+  "keywords": [
+    "bitset",
+    "bitmap",
+    "bit vector",
+    "bit array",
+    "bits",
+    "bit buffer"
+  ],
   "scripts": {
     "test": "node ./node_modules/jasmine-node/bin/jasmine-node ./spec/"
   },
-  "author": "Ozan Turgut <ozanturgut@gmail.com>",
-  "license": "APACHE 2",
+  "homepage": "https://github.com/oztu/bitsy",
+  "author":  {
+    "name": "Ozan Turgut",
+    "email": "ozanturgut@gmail.com",
+    "url": "http://ozan.io"
+  },
+  "licenses":  [
+    {
+      "type": "Apache License 2.0",
+      "url": "https://github.com/oztu/bitsy/blob/master/LICENSE-APACHE2"
+    }
+  ],
   "devDependencies": {
     "jasmine-node": "^1.14.3"
   }
