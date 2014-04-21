@@ -59,4 +59,9 @@ var a = b.slice(10, 14); // Note that the ending index is excluded
 
 // take the last 5 bits of b and use them to create 'a'
 var a = b.slice(-5);
+
+// Bitsy.prototype.toString([type])
+a.toString(); // Hex representation
+a.toString('base64'); // Base64 representation
+a.toString('binary'); // Binary represetnation
 ```

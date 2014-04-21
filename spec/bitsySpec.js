@@ -46,6 +46,41 @@ describe('constructor', function(){
 	});
 });
 
+describe('toString', function(){
+	it('returns hex represenation by default', function(){
+		var a = createBitsy(32);
+		a.set(0, true);
+		a.set(8, true);
+		a.set(16, true);
+		a.set(24, true);
+
+		expect(a.toString()).toBe('80808080');
+	});
+
+	it('can return base 64 representation', function(){
+		var a = createBitsy(8);
+		
+		expect(a.toString('base64')).toBe('AA==');
+
+		a.set(5, true);
+		
+		expect(a.toString('base64')).toBe('BA==');
+	});
+
+	it('can return binary representation', function(){
+		var a = createBitsy(8);
+		
+		a.set(0, true);
+		a.set(7, true);
+
+		expect(a.toString('binary')).toBe('10000001');
+
+		a.setSize(16);
+		expect(a.toString('binary')).toBe('1000000100000000');
+
+	});
+});
+
 describe('slice', function(){
 	it('returns new Bitsy with bits from source bitsy', function(){
 		var a = createBitsy(1000);

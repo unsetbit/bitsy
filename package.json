@@ -1,6 +1,6 @@
 {
   "name": "bitsy",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fast and efficient bitset backed by a byte buffer",
   "main": "./lib/createBitsy.js",
   "keywords": [
