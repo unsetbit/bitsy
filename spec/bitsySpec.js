@@ -30,6 +30,33 @@ describe('bit getter', function(){
 	});
 });
 
+describe('constructor', function(){
+	it('can construct large bitsets', function(){
+		var MEGABYTE_IN_BITS = 1048576 * 8;
+		var bitsy = createBitsy(2 * MEGABYTE_IN_BITS);
+		
+		expect(bitsy.get(4)).toBe(false);
+		bitsy.set(4, true);
+		expect(bitsy.get(4)).toBe(true);
+
+		expect(bitsy.get(1 * MEGABYTE_IN_BITS)).toBe(false);
+		bitsy.set(1 * MEGABYTE_IN_BITS, true);
+		expect(bitsy.get(1 * MEGABYTE_IN_BITS)).toBe(true);
+	});
+});
+
+describe('copy', function(){
+	it('shifts bits when copying', function(){
+		var a = createBitsy(1000);
+		a.set(100, true);
+
+		var b = createBitsy(50);
+		a.copyTo(b, 0, 80, 120);
+		
+		expect(b.get(20)).toBe(true);
+	});
+});
+
 describe('bit setter', function(){
 	it('handles truthy values as true', function(){
 		[true, 1, 42, 'true', 'popcorn'].forEach(function(truthyValue){
